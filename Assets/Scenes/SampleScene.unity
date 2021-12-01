@@ -208,6 +208,7 @@ GameObject:
   - component: {fileID: 156783196}
   - component: {fileID: 156783195}
   - component: {fileID: 156783194}
+  - component: {fileID: 156783197}
   m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
@@ -5061,6 +5062,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &156783197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 156783193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e00bf6b77c72642994caeb037ce5a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTime: 0
+  simulationSpeedScale: 1
 --- !u!1 &529300954
 GameObject:
   m_ObjectHideFlags: 0
@@ -5904,8 +5919,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1772269395}
-  m_LocalRotation: {x: 0.24009612, y: 0.16218169, z: 0.040727057, w: -0.9562386}
-  m_LocalPosition: {x: 455.88824, y: -58.205635, z: 464.05426}
+  m_LocalRotation: {x: 0.12059036, y: 0.37940916, z: 0.049950093, w: -0.9159758}
+  m_LocalPosition: {x: 686.17, y: -100.25, z: 295.63}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
