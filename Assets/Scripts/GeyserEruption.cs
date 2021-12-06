@@ -9,7 +9,7 @@ public class GeyserEruption : MonoBehaviour
 
     float[] simulationTimes;
 
-    public float startTime = 0.0f;
+    public float startTime = 0.0f, stopTime = 5.0f;
     public float simulationSpeedScale = 0.5f;
 
     void Initialize()
@@ -48,7 +48,7 @@ public class GeyserEruption : MonoBehaviour
 
             //particleSystems[i].useAutoRandomSeed = useAutoRandomSeed;
 
-            if (currentSimulationTime < 0.0f || currentSimulationTime > 5.0f)
+            if (currentSimulationTime < 0.0f || currentSimulationTime > stopTime)
             {
                 //particleSystems[i].Play(false);
                 //particleSystems[i].Stop(false, ParticleSystemStopBehavior.StopEmittingAndClear);

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Rendering.PostProcessing;
 
 public class MainMenu : MonoBehaviour
@@ -14,40 +15,67 @@ public class MainMenu : MonoBehaviour
     // Menu Items
     public CanvasGroup menuItems;
 
+    // Player
+    public GameObject playerObj;
+    private GameObject player;
+
     // Start is called before the first frame update
     void Start()
     {
         // Adapted from code found at https://forum.unity.com/threads/changing-depthoffield-parameters-from-script.854026/
         postProcessProfile = mainCamera.GetComponent<PostProcessVolume>().profile;
         dof = postProcessProfile.GetSetting<DepthOfField>();
+        mainCamera.gameObject.GetComponent<InGameFreeCam>().enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (player != null)
+            {
+                Destroy(player);
+                mainCamera.gameObject.SetActive(true);
+            }
+            ShowMenu();
+        }
     }
 
     public void Cinematic()
     {
-        EnterLevel();
+        cameraRotator.GetComponent<CameraRotator>().enabled = true;
+        mainCamera.gameObject.GetComponent<InGameFreeCam>().enabled = false;
+        HideMenu();
     }
 
     public void FreeCam()
     {
         cameraRotator.GetComponent<CameraRotator>().enabled = false;
-        EnterLevel();
+        mainCamera.gameObject.GetComponent<InGameFreeCam>().enabled = true;
+        HideMenu();
     }
 
     public void FirstPerson()
     {
-
+        player = Instantiate(playerObj, new Vector3(1000, 50, 0), Quaternion.identity);
+        mainCamera.gameObject.SetActive(false);
+        HideMenu();
     }
 
-    private void EnterLevel()
+    private void ShowMenu()
+    {
+        StartCoroutine(FadeDOF(2f, 0f, 1f)); // Take camera back out of focus
+        StartCoroutine(FadeCGAlpha(0f, 1f, 1f, menuItems)); // Fade in menu elements
+        Cursor.lockState = CursorLockMode.None;
+        GetComponent<GraphicRaycaster>().enabled = true; // Enable interaction with main menu when not shown on screen
+    }
+
+    private void HideMenu()
     {
         StartCoroutine(FadeDOF(0f, 2f, 1f)); // Bring camera back into focus
         StartCoroutine(FadeCGAlpha(1f, 0f, 1f, menuItems)); // Fade out menu elements
+        GetComponent<GraphicRaycaster>().enabled = false; // Disable interaction with main menu when not shown on screen
     }
 
     // Adapted from code found at https://forum.unity.com/threads/unity-4-6-ui-how-to-fade-a-canvas-group-in-and-then-out-after-a-seconds.299283/
