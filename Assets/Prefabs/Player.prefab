@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8490868848263078405}
   - component: {fileID: 1894904161125495122}
   - component: {fileID: 2866491650670815887}
-  - component: {fileID: 8576850587572905593}
   - component: {fileID: 5380533745272158759}
   - component: {fileID: 6051562307084374579}
   - component: {fileID: 10426561585871622}
@@ -88,23 +87,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 409840663707543005}
   m_Enabled: 1
---- !u!114 &8576850587572905593
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 409840663707543005}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2a4d6adee7f0dd41807df60c0d65158, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementSpeed: 10
-  fastMovementSpeed: 100
-  freeLookSensitivity: 3
-  zoomSensitivity: 10
-  fastZoomSensitivity: 50
 --- !u!114 &5380533745272158759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -534,7 +516,7 @@ CharacterController:
   serializedVersion: 2
   m_Height: 12.75
   m_Radius: 1.8
-  m_SlopeLimit: 45
+  m_SlopeLimit: 75
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
