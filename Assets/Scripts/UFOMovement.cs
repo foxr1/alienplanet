@@ -37,7 +37,10 @@ public class UFOMovement : MonoBehaviour
         if (transform.position != CurrentPositionHolder)
         {
             transform.position = Vector3.Lerp(startPosition, CurrentPositionHolder, Timer);
-            transform.LookAt(CurrentPositionHolder);
+
+            // Adapted from answer at https://answers.unity.com/questions/1329163/how-to-use-quaternionslerp-with-transformlookat.html
+            Quaternion lookOnLook = Quaternion.LookRotation(CurrentPositionHolder - transform.position);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookOnLook, Time.deltaTime);
         }
         else
         {

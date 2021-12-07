@@ -8,6 +8,7 @@ public class TimelinePlayer : MonoBehaviour
 {
     private PlayableDirector director;
     public GameObject controlPanel;
+    public MainMenu mainMenu;
 
     private void Awake()
     {
@@ -19,6 +20,7 @@ public class TimelinePlayer : MonoBehaviour
     private void Director_Stopped(PlayableDirector obj)
     {
         controlPanel.SetActive(true);
+        mainMenu.ShowMenu(mainMenu.menuItems, mainMenu.optionsMenuItems, 0f, true);
     }
 
     private void Director_Played(PlayableDirector obj)

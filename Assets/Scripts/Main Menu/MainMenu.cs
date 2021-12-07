@@ -27,6 +27,8 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Application.targetFrameRate = 60; // Target 60 FPS for game
+
         // Adapted from code found at https://forum.unity.com/threads/changing-depthoffield-parameters-from-script.854026/
         postProcessProfile = mainCamera.GetComponent<PostProcessVolume>().profile;
         dof = postProcessProfile.GetSetting<DepthOfField>();
@@ -104,7 +106,12 @@ public class MainMenu : MonoBehaviour
         ShowMenu(menuItems, optionsMenuItems, 0.5f, false);
     }
 
-    private void ShowMenu(CanvasGroup itemsToShow, CanvasGroup itemsToHide, float duration, bool dofTransition)
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
+    public void ShowMenu(CanvasGroup itemsToShow, CanvasGroup itemsToHide, float duration, bool dofTransition)
     {
         itemsToHide.interactable = false;
         itemsToShow.interactable = true;
