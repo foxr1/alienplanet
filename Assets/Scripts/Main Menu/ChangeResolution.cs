@@ -23,6 +23,7 @@ public class ChangeResolution : MonoBehaviour
 
         _ = (QualitySettings.vSyncCount == 1) ? vsync.isOn == true : vsync.isOn == false;
 
+        // Get resolutions from computer and add them to the dropdown list
         resolutions = Screen.resolutions.Select(resolution => new Resolution { width = resolution.width, height = resolution.height }).Distinct().ToArray();
         for (int i = resolutions.Length - 1; i >= 0; i--)
         {
@@ -30,16 +31,14 @@ public class ChangeResolution : MonoBehaviour
             dropdown.AddOptions(newRes);
         }
 
-        dropdown.SetValueWithoutNotify(0);
-        
-        Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, fullscreen.isOn);
+        dropdown.SetValueWithoutNotify(0); // Set dropdown to first in list (highest native resolution)
+        Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, fullscreen.isOn); // Set resolution
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Keep the current index of the Dropdown in a variable
-        dropdownValue = dropdown.value;
+        dropdownValue = dropdown.value; //Keep the current index of the Dropdown in a variable
         resolutionText = dropdown.options[dropdownValue].text;
 
         int width = int.Parse(resolutionText.Split('x')[0]), height = int.Parse(resolutionText.Split('x')[1]);

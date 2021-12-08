@@ -15,6 +15,7 @@ public class Options : MonoBehaviour
 
     private void Start()
     {
+        // Create new instance of rain to be deleted and re-created from options menu
         rainInGame = Instantiate(rainPrefab, new Vector3(1000, 10, 0), Quaternion.identity);
         rainInGame.GetComponent<RainScript>().Camera = mainCamera;
     }

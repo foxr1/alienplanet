@@ -5,19 +5,15 @@ using UnityEngine;
 public class UFOMovement : MonoBehaviour
 {
     // Adapted from code found at https://forum.unity.com/threads/move-gameobject-along-a-given-path.455195/
-
     public GameObject[] PathNode;
     public float MoveSpeed;
-    float Timer;
-    static Vector3 CurrentPositionHolder;
-    int CurrentNode;
+    private float Timer;
+    private static Vector3 CurrentPositionHolder;
+    private int CurrentNode;
     private Vector3 startPosition;
 
-
-    // Use this for initialization 
     void Start()
     {
-        //PathNode = GetComponentInChildren<>();
         CheckNode();
     }
 
@@ -31,7 +27,6 @@ public class UFOMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         Timer += Time.deltaTime * MoveSpeed;
 
         if (transform.position != CurrentPositionHolder)
@@ -52,6 +47,7 @@ public class UFOMovement : MonoBehaviour
             {
                 CurrentNode = 0;
             }
+
             CheckNode();
         }
     }

@@ -46,14 +46,10 @@ public class MainMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // As long as a fade transition isn't happening and the menu isn't already visible
         if (Input.GetKeyDown(KeyCode.Escape) && !transitionRunning && menuItems.alpha != 1)
         {
-            if (player != null)
-            {
-                Destroy(player);
-                mainCamera.gameObject.SetActive(true);
-            }
-
+            // If user is in free-cam mode, then disable freecam and reset back to rotating orbit position
             if (mainCamera.gameObject.GetComponent<InGameFreeCam>().isActiveAndEnabled)
             {
                 mainCamera.transform.position = cameraRotator.GetComponent<CameraRotator>().startPosition;
@@ -61,6 +57,14 @@ public class MainMenu : MonoBehaviour
                 cameraRotator.GetComponent<CameraRotator>().enabled = true;
             }
 
+            // If user is in first-person, delete character from scene
+            if (player != null)
+            {
+                Destroy(player);
+                mainCamera.gameObject.SetActive(true);
+            }
+
+            // If user is in option menu then execute quicker fade transition
             if (optionsMenuItems.alpha == 1)
             {
                 StartCoroutine(HideMenu(optionsMenuItems, 0.5f, false));
@@ -76,9 +80,9 @@ public class MainMenu : MonoBehaviour
     public void Cinematic()
     {
         cinemachineCamera.GetComponent<TimelinePlayer>().StartTimeline();
-        options.rainInGame.GetComponent<RainScript>().Camera = cinemachineCamera.GetComponent<Camera>();
+        options.rainInGame.GetComponent<RainScript>().Camera = cinemachineCamera.GetComponent<Camera>(); // Change rain to target cinematic camera
 
-        mainCamera.GetComponent<AudioListener>().enabled = false;
+        mainCamera.GetComponent<AudioListener>().enabled = false; // Temporarily disable audio listener to avoid conflict with two at same time
         mainCamera.gameObject.GetComponent<InGameFreeCam>().enabled = false;
         StartCoroutine(HideMenu(menuItems, 1f, true));
     }
@@ -92,7 +96,7 @@ public class MainMenu : MonoBehaviour
 
     public void FirstPerson()
     {
-        player = Instantiate(playerObj, new Vector3(1000, 50, 0), Quaternion.identity);
+        player = Instantiate(playerObj, new Vector3(1000, 50, 0), Quaternion.identity); // Create new player in centre of terrain
         mainCamera.gameObject.SetActive(false);
         mainCamera.gameObject.GetComponent<InGameFreeCam>().enabled = false;
         StartCoroutine(HideMenu(menuItems, 1f, true));

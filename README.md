@@ -32,7 +32,7 @@ Used for multiple textures on planet surface. ([Link](https://assetstore.unity.c
 Used for some of the vegation in the scene. ([Link](https://assetstore.unity.com/packages/3d/vegetation/trees/dream-forest-tree-105297))
 
 ### Standard Assets for Unity
-Used for the water in the scene and modified the given lens flares for the UFO and sun. ([Link](https://assetstore.unity.com/packages/essentials/asset-packs/standard-assets-for-unity-2018-4-32351))
+Used for the water in the scene and modified the given lens flares for the UFO and sun. The lake in the scene uses the higher quality water and the river uses a lower quality one to avoid low framerate. ([Link](https://assetstore.unity.com/packages/essentials/asset-packs/standard-assets-for-unity-2018-4-32351))
 
 ### UFO Model
 Used a UFO model from TurboSquid. ([Link](https://www.turbosquid.com/3d-models/free-3ds-model-flying-saucer/1081073))
