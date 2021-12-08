@@ -10,8 +10,8 @@ public class CameraRotator : MonoBehaviour
 
     private void Start()
     {
-        startPosition = transform.position;
-        startRotation = GetComponentInChildren<Camera>().transform.rotation;
+        startPosition = GetComponentInChildren<Camera>().gameObject.transform.position;
+        startRotation = GetComponentInChildren<Camera>().gameObject.transform.rotation;
     }
 
     // Update is called once per frame

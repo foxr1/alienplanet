@@ -1,3 +1,4 @@
+using DigitalRuby.RainMaker;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,14 @@ public class Options : MonoBehaviour
     public CanvasGroup debugInfo;
     public MainMenu mainMenu;
     public Camera mainCamera;
-    public GameObject rain;
+    public GameObject rainPrefab;
+    public GameObject rainInGame;
+
+    private void Start()
+    {
+        rainInGame = Instantiate(rainPrefab, new Vector3(1000, 10, 0), Quaternion.identity);
+        rainInGame.GetComponent<RainScript>().Camera = mainCamera;
+    }
 
     public void FullscreenToggle(bool toggle)
     {
@@ -35,7 +43,15 @@ public class Options : MonoBehaviour
 
     public void RainToggle(bool toggle)
     {
-        rain.SetActive(toggle);
+        if (!toggle && rainInGame != null)
+        {
+            Destroy(rainInGame);
+        } 
+        else
+        {
+            rainInGame = Instantiate(rainPrefab, new Vector3(1000, 10, 0), Quaternion.identity);
+            rainInGame.GetComponent<RainScript>().Camera = mainCamera;
+        }
     }
 
     public void FogToggle(bool toggle)

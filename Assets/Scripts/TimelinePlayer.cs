@@ -19,12 +19,14 @@ public class TimelinePlayer : MonoBehaviour
 
     private void Director_Stopped(PlayableDirector obj)
     {
+        GetComponent<AudioListener>().enabled = false;
         controlPanel.SetActive(true);
         mainMenu.ShowMenu(mainMenu.menuItems, mainMenu.optionsMenuItems, 0f, true);
     }
 
     private void Director_Played(PlayableDirector obj)
     {
+        GetComponent<AudioListener>().enabled = true;
         controlPanel.SetActive(false);
     }
 

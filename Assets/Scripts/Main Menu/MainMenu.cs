@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering.PostProcessing;
+using DigitalRuby.RainMaker;
 
 public class MainMenu : MonoBehaviour
 {
@@ -17,8 +18,8 @@ public class MainMenu : MonoBehaviour
     public CanvasGroup menuItems;
     public CanvasGroup optionsMenuItems;
     public Toggle dofToggle;
-
     private bool transitionRunning = false;
+    public Options options;
 
     // Player
     public GameObject playerObj;
@@ -27,7 +28,11 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Application.targetFrameRate = 60; // Target 60 FPS for game
+        // Game runs at 30 FPS on mobile unless stated otherwise
+        if (SystemInfo.deviceType == DeviceType.Handheld)
+        {
+            Application.targetFrameRate = 60; 
+        }
 
         // Adapted from code found at https://forum.unity.com/threads/changing-depthoffield-parameters-from-script.854026/
         postProcessProfile = mainCamera.GetComponent<PostProcessVolume>().profile;
@@ -51,7 +56,7 @@ public class MainMenu : MonoBehaviour
 
             if (mainCamera.gameObject.GetComponent<InGameFreeCam>().isActiveAndEnabled)
             {
-                cameraRotator.transform.position = cameraRotator.GetComponent<CameraRotator>().startPosition;
+                mainCamera.transform.position = cameraRotator.GetComponent<CameraRotator>().startPosition;
                 mainCamera.transform.rotation = cameraRotator.GetComponent<CameraRotator>().startRotation;
                 cameraRotator.GetComponent<CameraRotator>().enabled = true;
             }
@@ -71,14 +76,15 @@ public class MainMenu : MonoBehaviour
     public void Cinematic()
     {
         cinemachineCamera.GetComponent<TimelinePlayer>().StartTimeline();
+        options.rainInGame.GetComponent<RainScript>().Camera = cinemachineCamera.GetComponent<Camera>();
 
+        mainCamera.GetComponent<AudioListener>().enabled = false;
         mainCamera.gameObject.GetComponent<InGameFreeCam>().enabled = false;
         StartCoroutine(HideMenu(menuItems, 1f, true));
     }
 
     public void FreeCam()
     {
-        cinemachineCamera.GetComponent<TimelinePlayer>().StopAndResetTimeline();
         cameraRotator.GetComponent<CameraRotator>().enabled = false;
         mainCamera.gameObject.GetComponent<InGameFreeCam>().enabled = true;
         StartCoroutine(HideMenu(menuItems, 1f, true));
@@ -86,7 +92,6 @@ public class MainMenu : MonoBehaviour
 
     public void FirstPerson()
     {
-        cinemachineCamera.GetComponent<TimelinePlayer>().StopAndResetTimeline();
         player = Instantiate(playerObj, new Vector3(1000, 50, 0), Quaternion.identity);
         mainCamera.gameObject.SetActive(false);
         mainCamera.gameObject.GetComponent<InGameFreeCam>().enabled = false;
@@ -113,6 +118,14 @@ public class MainMenu : MonoBehaviour
 
     public void ShowMenu(CanvasGroup itemsToShow, CanvasGroup itemsToHide, float duration, bool dofTransition)
     {
+        // Stop cinemachine timeline, set rain to target main camera instead of cinemachine camera and re-enable audio listener for main camera
+        cinemachineCamera.GetComponent<TimelinePlayer>().StopAndResetTimeline();
+        if (options.rainInGame != null)
+        {
+            options.rainInGame.GetComponent<RainScript>().Camera = mainCamera;
+        }
+        mainCamera.GetComponent<AudioListener>().enabled = true;
+
         itemsToHide.interactable = false;
         itemsToShow.interactable = true;
         itemsToShow.gameObject.SetActive(true);
